@@ -1,7 +1,6 @@
 package com.example.task315.services.service;
 
 
-
 import javax.transaction.Transactional;
 
 import com.example.task315.entities.User;
@@ -32,7 +31,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
     public User showUserById(long id) {
         Optional<User> optionalUser = userRepository.findById(id);
@@ -41,17 +39,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUser(User user) {
-        Optional<User> userFromDb = userRepository.findByUsername(user.getUsername());
+    public boolean updateUser(long id, User user) {
+        Optional<User> userFromDb = userRepository.findById(id);
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        if ((bCryptPasswordEncoder.matches(user.getPassword(),userFromDb.get().getPassword()))  || (user.getPassword().isEmpty())) {
+        if ((bCryptPasswordEncoder.matches(user.getPassword(), userFromDb.get().getPassword())) || (user.getPassword().isEmpty())) {
             user.setPassword(userFromDb.get().getPassword());
         } else {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
-
         userRepository.save(user);
+
         return true;
     }
 
@@ -65,6 +63,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return true;
     }
+
     @Override
     public void deleteUser(long id) {
         userRepository.deleteById(id);

@@ -15,7 +15,7 @@ public interface UserService extends UserDetailsService {
 
     public User showUserById(long id);
 
-    public boolean updateUser(User user);
+    public boolean updateUser(long id, User user);
 
     public boolean addUser(User user);
 

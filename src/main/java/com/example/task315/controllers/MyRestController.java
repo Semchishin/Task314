@@ -72,7 +72,7 @@ public class MyRestController {
 
         @PutMapping("users")
         public ResponseEntity<User> updateUser(@RequestBody User user) {
-            userService.updateUser(user);
+            userService.updateUser(user.getId(), user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
 
